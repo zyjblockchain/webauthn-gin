@@ -9,7 +9,6 @@ import (
 	"github.com/go-webauthn/webauthn/webauthn"
 	"github.com/zyjblockchain/webauthn-gin/database"
 	"github.com/zyjblockchain/webauthn-gin/schema"
-	"io"
 	"net/http"
 )
 
@@ -88,12 +87,6 @@ func (s *Server) finishRegistration(c *gin.Context) {
 		internalErrorResponse(c, err.Error())
 		return
 	}
-	bby, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		panic(err)
-	}
-	log.Warn("body", "bby: ", string(bby))
-	// reader := bytes.NewReader(bby)
 	credential, err := s.webAuthn.FinishRegistration(user, sessionData, c.Request)
 	if err != nil {
 		internalErrorResponse(c, err.Error())
