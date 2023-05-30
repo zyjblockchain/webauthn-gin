@@ -6,6 +6,7 @@ import (
 	"github.com/go-webauthn/webauthn/protocol"
 	"github.com/go-webauthn/webauthn/webauthn"
 	"github.com/zyjblockchain/webauthn-gin/database"
+	"sync"
 )
 
 var log = common.NewLog("webauthn-gin")
@@ -14,6 +15,8 @@ type Server struct {
 	engine   *gin.Engine
 	webAuthn *webauthn.WebAuthn
 	wdb      *database.Wdb
+	accounts map[string]*AA // key: email
+	locker   sync.Mutex
 }
 
 func NewServer(dsn string) *Server {
@@ -36,6 +39,7 @@ func NewServer(dsn string) *Server {
 		engine:   gin.Default(),
 		webAuthn: webAuthn,
 		wdb:      database.NewDB(dsn),
+		accounts: make(map[string]*AA, 0),
 	}
 }
 

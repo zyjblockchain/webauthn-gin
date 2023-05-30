@@ -1,5 +1,9 @@
 package pay
 
+const (
+	RegisterAuthnAction = "registerAcc"
+)
+
 type Register struct {
 	Id                string `json:"id"`
 	RawId             string `json:"rawId"` // 二进制形式的凭证Id
@@ -7,7 +11,7 @@ type Register struct {
 	ClientDataJSON    string `json:"clientDataJSON"`
 }
 
-type Login struct {
+type Authn struct {
 	Id                string `json:"id"`
 	RawId             string `json:"rawId"`
 	ClientDataJSON    string `json:"clientDataJSON"`
